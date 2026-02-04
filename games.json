@@ -2693,6 +2693,367 @@
 	  "game_image_icon": "https://hfmanor.com/image/route-digger",
 	  "game-id": "route-digger",
 	  "iframe": " <iframe width=\"1366\" height=\"768\" src=\"https://hfmanor.com/route-digger\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe> "
-	}
+	}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Unblocked Games Hub</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<style>
+:root{
+  --bg:#071025; --panel:#071827; --card:#0b1220; --muted:#9aa4b2;
+  --accent:#7c5cff; --glass:rgba(255,255,255,0.03); --text:#e6eef8;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  color:var(--text);background:linear-gradient(180deg,#04101a 0%,#071827 100%);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+.header{
+  display:flex;align-items:center;justify-content:space-between;padding:16px 20px;
+  background:linear-gradient(90deg,rgba(124,92,255,0.06),transparent);
+  border-bottom:1px solid rgba(255,255,255,0.02);
+  position:sticky;top:0;backdrop-filter:blur(6px);z-index:40;
+}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{
+  width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#3ddcff);
+  display:flex;align-items:center;justify-content:center;font-weight:700;color:#021;box-shadow:0 8px 24px rgba(124,92,255,0.12)
+}
+.title{margin:0;font-size:16px}
+.subtitle{font-size:12px;color:var(--muted)}
+.controls{display:flex;gap:12px;align-items:center}
+.search{padding:8px 12px;border-radius:10px;border:0;background:var(--glass);color:inherit;min-width:220px}
+.container{max-width:1100px;margin:20px auto;padding:0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:12px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+.thumb{height:110px;border-radius:8px;background:#071022;background-size:cover;background-position:center}
+.titleSmall{font-size:14px;font-weight:600;color:#eaf0ff}
+.meta{font-size:12px;color:var(--muted)}
+.playerWrap{max-width:1000px;margin:18px auto;background:var(--card);padding:12px;border-radius:12px;min-height:60vh}
+.playerHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.back{color:var(--accent);cursor:pointer;font-weight:600}
+.iframeBox{width:100%;height:70vh;border-radius:8px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,0.03)}
+.iframeBox iframe{width:100%;height:100%;border:0}
+.empty{color:var(--muted);text-align:center;padding:40px}
+.footer{padding:18px;text-align:center;color:var(--muted);font-size:13px}
+.controls .btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--text);cursor:pointer}
+.pager{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:14px}
+.pager button{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--text);cursor:pointer}
+.loading{padding:28px;text-align:center;color:var(--muted)}
+.searchRow{display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+@media (max-width:640px){.thumb{height:90px}.search{min-width:140px}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="brand">
+    <div class="logo">UG</div>
+    <div>
+      <h1 class="title">Unblocked Games Hub</h1>
+      <div class="subtitle">Sleek • Simple • Modern</div>
+    </div>
+  </div>
+  <div class="controls">
+    <input id="search" class="search" placeholder="Search games or categories..." aria-label="Search games" />
+    <div class="btn" id="refreshBtn" title="Reload game list">Refresh</div>
+  </div>
+</header>
+
+<main class="container" id="app">
+  <!-- LIST VIEW -->
+  <section id="listView" aria-live="polite">
+    <div class="searchRow">
+      <div style="flex:1">
+        <div style="color:var(--muted);font-size:13px;margin-bottom:6px">Browse games</div>
+        <div style="font-size:13px;color:var(--muted)">Click a game to open its playable page. Some games may be blocked by network policies.</div>
+      </div>
+    </div>
+
+    <div id="loading" class="loading">Loading games…</div>
+    <div id="grid" class="grid" style="display:none"></div>
+    <div id="empty" class="empty" style="display:none">No games found.</div>
+
+    <div id="pager" class="pager" style="display:none">
+      <button id="prevPage">Prev</button>
+      <div id="pageInfo" style="min-width:120px;text-align:center;color:var(--muted)"></div>
+      <button id="nextPage">Next</button>
+    </div>
+  </section>
+
+  <!-- PLAY VIEW -->
+  <section id="playView" style="display:none">
+    <div class="playerWrap">
+      <div class="playerHeader">
+        <div>
+          <div class="back" id="backBtn">&larr; Back to games</div>
+          <div id="playerTitle" style="font-size:18px;font-weight:700;margin-top:8px"></div>
+          <div id="playerMeta" style="color:var(--muted);font-size:13px;margin-top:6px"></div>
+        </div>
+        <div style="text-align:right;color:var(--muted);font-size:13px">Shareable URL: <span id="shareUrl" style="color:var(--accent);word-break:break-all"></span></div>
+      </div>
+
+      <div id="iframeContainer" class="iframeBox" aria-live="polite">
+        <!-- iframe inserted here -->
+      </div>
+
+      <div style="margin-top:12px;color:var(--muted);font-size:13px">If a game fails to load, your network or browser may be blocking the source. Use the back button to try another game.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">Built for quick browsing. Some games may be blocked by network policies.</footer>
+
+<script>
+/*
+  Single-file Unblocked Games Hub
+  - Fetches JSON from raw GitHub URL
+  - Falls back to embedded sample data if fetch fails
+  - Uses "iframe" and "game_image_icon" fields
+  - Client-side routing: #game/<id>
+*/
+
+const RAW_JSON = 'https://raw.githubusercontent.com/swarmintelli/Unblocked-Games-CDN/main/games.json';
+const gridEl = document.getElementById('grid');
+const loadingEl = document.getElementById('loading');
+const emptyEl = document.getElementById('empty');
+const listView = document.getElementById('listView');
+const playView = document.getElementById('playView');
+const iframeContainer = document.getElementById('iframeContainer');
+const playerTitle = document.getElementById('playerTitle');
+const playerMeta = document.getElementById('playerMeta');
+const backBtn = document.getElementById('backBtn');
+const searchInput = document.getElementById('search');
+const refreshBtn = document.getElementById('refreshBtn');
+const shareUrlEl = document.getElementById('shareUrl');
+const pager = document.getElementById('pager');
+const prevPageBtn = document.getElementById('prevPage');
+const nextPageBtn = document.getElementById('nextPage');
+const pageInfo = document.getElementById('pageInfo');
+
+let games = [];
+let filtered = [];
+let page = 1;
+const PAGE_SIZE = 18;
+
+// Minimal embedded fallback data (used if fetch fails)
+const FALLBACK_GAMES = [
+  {
+    id: "sample-1",
+    title: "Sample Platformer",
+    iframe: "<iframe src='https://example.com/sample-game-1' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>",
+    game_image_icon: "https://via.placeholder.com/400x300.png?text=Sample+1",
+    category: "Platformer"
+  },
+  {
+    id: "sample-2",
+    title: "Sample Puzzle",
+    iframe: "<iframe src='https://example.com/sample-game-2' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>",
+    game_image_icon: "https://via.placeholder.com/400x300.png?text=Sample+2",
+    category: "Puzzle"
+  }
+];
+
+// Utility: safe ID generator
+function makeId(i){ return (i.id || i.title || ('game-'+Math.random().toString(36).slice(2,9))).toString(); }
+
+// Render helpers
+function showLoading(){ loadingEl.style.display='block'; gridEl.style.display='none'; emptyEl.style.display='none'; pager.style.display='none'; }
+function showGrid(){ loadingEl.style.display='none'; gridEl.style.display='grid'; }
+function showEmpty(){ loadingEl.style.display='none'; gridEl.style.display='none'; emptyEl.style.display='block'; pager.style.display='none'; }
+
+function renderListPage(){
+  gridEl.innerHTML = '';
+  const start = (page-1)*PAGE_SIZE;
+  const pageItems = filtered.slice(start, start+PAGE_SIZE);
+  if(pageItems.length === 0){ showEmpty(); return; }
+  showGrid();
+  pageItems.forEach((g, idx)=>{
+    const card = document.createElement('div'); card.className='card';
+    const thumbUrl = g.game_image_icon || '';
+    card.innerHTML = `
+      <div class="thumb" style="background-image:url('${escapeAttr(thumbUrl)}')"></div>
+      <div class="titleSmall">${escapeHtml(g.title || g.name || 'Untitled')}</div>
+      <div class="meta">${escapeHtml(g.category || '')}</div>
+    `;
+    card.addEventListener('click', ()=> navigateToGame(g._id));
+    gridEl.appendChild(card);
+  });
+  // pager
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  pageInfo.textContent = 'Page ' + page + ' of ' + totalPages + ' — ' + filtered.length + ' games';
+  pager.style.display = totalPages > 1 ? 'flex' : 'none';
+  prevPageBtn.disabled = page <= 1;
+  nextPageBtn.disabled = page >= totalPages;
+}
+
+// Basic HTML escaping for text nodes
+function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+// Open game view
+function openGameById(id){
+  const g = games.find(x=>x._id === id);
+  if(!g){ // invalid id -> go home
+    navigateHome();
+    return;
+  }
+  listView.style.display='none';
+  playView.style.display='block';
+  playerTitle.textContent = g.title || g.name || 'Game';
+  playerMeta.textContent = g.category ? ('Category: ' + g.category) : '';
+  // Build shareable URL (hash-based)
+  const shareHash = '#game/' + encodeURIComponent(g._id);
+  shareUrlEl.textContent = location.origin + location.pathname + shareHash;
+  // Insert iframe safely:
+  // If the JSON provides a full iframe HTML string, we insert it as HTML only after a small sanitization step:
+  iframeContainer.innerHTML = '';
+  const iframeHtml = (g.iframe || g.embed || g.url || '').toString().trim();
+  if(iframeHtml.startsWith('<iframe')){
+    // Insert as-is but ensure sandbox attribute exists; if not, add a conservative sandbox
+    let sanitized = iframeHtml;
+    if(!/sandbox\s*=/.test(sanitized)){
+      // add sandbox and allowfullscreen if missing
+      sanitized = sanitized.replace(/^<iframe/i, '<iframe sandbox="allow-scripts allow-same-origin"');
+    }
+    // Create wrapper and set innerHTML (we trust the source but still keep sandbox)
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = sanitized;
+    // If the iframe has no src but data-src, try to set src
+    const ifr = wrapper.querySelector('iframe');
+    if(ifr){
+      // ensure width/height responsive
+      ifr.style.width = '100%';
+      ifr.style.height = '100%';
+      iframeContainer.appendChild(ifr);
+    } else {
+      iframeContainer.textContent = 'Invalid iframe embed for this game.';
+    }
+  } else if(iframeHtml){
+    // treat as URL
+    const ifr = document.createElement('iframe');
+    ifr.src = iframeHtml;
+    ifr.allowFullscreen = true;
+    ifr.setAttribute('sandbox','allow-scripts allow-same-origin');
+    iframeContainer.appendChild(ifr);
+  } else {
+    iframeContainer.textContent = 'No playable embed available for this game.';
+  }
+  // scroll to top
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Navigation
+function navigateToGame(id){
+  location.hash = 'game/' + encodeURIComponent(id);
+}
+function navigateHome(){
+  location.hash = '';
+  playView.style.display='none';
+  listView.style.display='block';
+  iframeContainer.innerHTML = '';
+}
+
+// Router: respond to hash changes
+function handleRoute(){
+  const hash = location.hash.replace(/^#/,'');
+  if(!hash) { navigateHome(); return; }
+  const parts = hash.split('/');
+  if(parts[0] === 'game' && parts[1]){
+    openGameById(decodeURIComponent(parts[1]));
+  } else {
+    navigateHome();
+  }
+}
+
+// Search & filtering
+function applyFilter(){
+  const q = (searchInput.value || '').trim().toLowerCase();
+  if(!q){ filtered = games.slice(); }
+  else {
+    filtered = games.filter(g=>{
+      const t = (g.title||g.name||'').toLowerCase();
+      const c = (g.category||'').toLowerCase();
+      return t.includes(q) || c.includes(q);
+    });
+  }
+  page = 1;
+  renderListPage();
+}
+
+// Pagination handlers
+prevPageBtn.addEventListener('click', ()=>{ if(page>1){ page--; renderListPage(); window.scrollTo({top:0,behavior:'smooth'}); }});
+nextPageBtn.addEventListener('click', ()=>{ page++; renderListPage(); window.scrollTo({top:0,behavior:'smooth'}); });
+
+// Back button
+backBtn.addEventListener('click', ()=>{ navigateHome(); });
+
+// Search input
+searchInput.addEventListener('input', ()=>{ applyFilter(); });
+
+// Refresh button
+refreshBtn.addEventListener('click', ()=>{ loadGames(true); });
+
+// Load games from remote JSON with fallback
+async function loadGames(force=false){
+  showLoading();
+  gridEl.innerHTML = '';
+  try {
+    // Use fetch with no-cache to try to get latest
+    const res = await fetch(RAW_JSON, {cache: 'no-store'});
+    if(!res.ok) throw new Error('Fetch failed: ' + res.status);
+    const data = await res.json();
+    // Normalize structure: the repo's JSON is an array of objects
+    const arr = Array.isArray(data) ? data : (data.games || Object.values(data) || []);
+    games = arr.map((g,i)=>{
+      const id = makeId(g);
+      return {
+        _id: id,
+        title: g.title || g.name || g.game_title || '',
+        iframe: g.iframe || g.embed || g.url || '',
+        game_image_icon: g.game_image_icon || g.thumbnail || '',
+        category: g.category || g.tags || ''
+      };
+    });
+    if(games.length === 0) throw new Error('No games in JSON');
+  } catch (err) {
+    console.warn('Failed to load remote JSON, using fallback. Error:', err);
+    // Use fallback but keep trying to parse remote if partial
+    games = FALLBACK_GAMES.map((g,i)=>({
+      _id: g.id || ('fallback-'+i),
+      title: g.title,
+      iframe: g.iframe,
+      game_image_icon: g.game_image_icon,
+      category: g.category
+    }));
+  }
+  // initial filter and render
+  filtered = games.slice();
+  page = 1;
+  renderListPage();
+  // If the URL points to a game, open it
+  handleRoute();
+}
+
+// Initialize
+window.addEventListener('hashchange', handleRoute);
+window.addEventListener('load', ()=>{ loadGames(); });
+
+// Utility: create id from object
+function makeId(obj){
+  if(!obj) return 'g-'+Math.random().toString(36).slice(2,9);
+  if(obj.id) return obj.id.toString();
+  if(obj._id) return obj._id.toString();
+  if(obj.title) return obj.title.toString().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'').slice(0,40) + '-' + Math.random().toString(36).slice(2,6);
+  return 'g-'+Math.random().toString(36).slice(2,9);
+}
+</script>
+</body>
+</html>
+
   ]
   
